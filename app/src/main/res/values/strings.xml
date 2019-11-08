@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Thời tiết tổng hợp</string>
+    <string name="tab_text_1">Dự báo thời tiết</string>
+    <string name="tab_text_2">Báo thức</string>
+    <string name="temp_text">Nhiệt độ</string>
+    <string name="moisture_text">Độ ẩm</string>
+    <string name="wind_text">Sức gió</string>
+</resources>
