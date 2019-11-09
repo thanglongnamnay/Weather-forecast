@@ -12,7 +12,9 @@ import com.example.weatherforcast.R;
 import com.example.weatherforcast.model.Weather;
 import com.example.weatherforcast.model.WeatherIO;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class WeatherAdapter extends BaseAdapter {
     private final WeatherIO weatherIO = WeatherIO.getInstance();
@@ -41,16 +43,16 @@ public class WeatherAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        WeatherViewHolder holder = null;
+        WeatherViewHolder holder;
         if (convertView == null) {
             convertView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                     .inflate(R.layout.weather_row, null);
             holder = new WeatherViewHolder(
-                    (TextView) convertView.findViewById(R.id.tv_weather_time),
-                    (ImageView) convertView.findViewById(R.id.iv_weather_image),
-                    (TextView) convertView.findViewById(R.id.tv_weather_temp),
-                    (TextView) convertView.findViewById(R.id.tv_weather_moisture),
-                    (TextView) convertView.findViewById(R.id.tv_weather_wind)
+                    convertView.findViewById(R.id.tv_weather_time),
+                    convertView.findViewById(R.id.iv_weather_image),
+                    convertView.findViewById(R.id.tv_weather_temp),
+                    convertView.findViewById(R.id.tv_weather_moisture),
+                    convertView.findViewById(R.id.tv_weather_wind)
             );
 
             convertView.setTag(holder);
@@ -59,12 +61,20 @@ public class WeatherAdapter extends BaseAdapter {
         }
         Weather instant = (Weather) getItem(position);
         if (instant != null) {
-            holder.time.setText(instant.getTime().toString());
+            DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.forLanguageTag("vi"));
+            holder.time.setText(android.text.format.DateFormat.format("hh:mm dd/MM/yyyy", instant.getTime()));
             holder.temp.setText(instant.getTemp() + "C");
             holder.moisture.setText(instant.getMoisture() + "%");
-            holder.wind.setText(instant.getWind() + "m/s");
+            holder.wind.setText(instant.getWind() + " m/s");
+            holder.image.setImageResource(instant.getImage());
         }
         return convertView;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        this.weatherList = weatherIO.getForecast();
+        super.notifyDataSetChanged();
     }
 }
 
