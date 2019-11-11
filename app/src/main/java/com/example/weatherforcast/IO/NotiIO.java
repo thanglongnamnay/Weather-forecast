@@ -65,24 +65,25 @@ public class NotiIO {
         return notiList;
     }
     public void add(Noti noti) {
-
-        // notificationId is a unique int for each notification that you must define
-        String tag = UUID.randomUUID().toString();
-
-        //Get time before alarm
-        String[] time = noti.getTime().split(":");
-        int hour = Integer.parseInt(time[0]);
-        int min = Integer.parseInt(time[1]);
-        long alertTime = getAlertTime(hour, min) - System.currentTimeMillis();
-
-        int random = (int )(Math.random() * 50 + 1);
-
-        //Data
-        Data data = createWorkInputData(Constants.TITLE, noti.getDescription(), random);
-
-        NotificationHandler.scheduleReminder(alertTime, data, tag);
         notiList.add(noti);
         update();
+        if (noti.isEnable()) {
+            // notificationId is a unique int for each notification that you must define
+            String tag = UUID.randomUUID().toString();
+
+            //Get time before alarm
+            String[] time = noti.getTime().split(":");
+            int hour = Integer.parseInt(time[0]);
+            int min = Integer.parseInt(time[1]);
+            long alertTime = getAlertTime(hour, min) - System.currentTimeMillis();
+
+            int random = (int) (Math.random() * 50 + 1);
+
+            //Data
+            Data data = createWorkInputData(Constants.TITLE, noti.getDescription(), random);
+
+            NotificationHandler.scheduleReminder(alertTime, data, tag);
+        }
     }
 
     private long getAlertTime(int hour, int min){
