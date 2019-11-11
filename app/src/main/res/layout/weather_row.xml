@@ -20,12 +20,13 @@
             android:gravity="center"
             android:text="16H"
             android:textAlignment="textStart"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/iv_weather_image"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/sunny" />
@@ -46,7 +47,7 @@
             android:gravity="center"
             android:text="22%"
             android:textAlignment="center"
-            android:textSize="22sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
@@ -57,7 +58,7 @@
             android:gravity="center"
             android:text="22%"
             android:textAlignment="center"
-            android:textSize="22sp" />
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/tv_weather_wind"
@@ -67,7 +68,7 @@
             android:gravity="center"
             android:text="22%"
             android:textAlignment="center"
-            android:textSize="22sp" />
+            android:textSize="26sp" />
     </LinearLayout>
 
 </LinearLayout>

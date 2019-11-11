@@ -16,14 +16,27 @@ public class WeatherIO {
     private ArrayList<Weather> weatherList;
     private Weather currentWeather;
     private static TreeMap<String, Integer> iconMap = new TreeMap<>();
+    private String city = "Hanoi";
     public static PlaceholderFragment fragment;
 
     private WeatherIO() {
-        CurrentWeatherFetch currentWeatherFetch = new CurrentWeatherFetch(QueryType.city, "Hanoi");
-        currentWeatherFetch.execute();
+        new CurrentWeatherFetch(QueryType.gps, city).execute();
+        new ForecastFetch(QueryType.gps, city).execute();
+    }
 
-        ForecastFetch forecastFetch = new ForecastFetch();
-        forecastFetch.execute();
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+        if (city != null) {
+            new CurrentWeatherFetch(QueryType.city, city).execute();
+            new ForecastFetch(QueryType.city, city).execute();
+        } else {
+            new CurrentWeatherFetch(QueryType.gps, null).execute();
+            new ForecastFetch(QueryType.gps, null).execute();
+        }
     }
 
     public static WeatherIO getInstance() {
@@ -79,7 +92,6 @@ public class WeatherIO {
 
     public ArrayList<Weather> getForecast() {
         if (weatherList == null) {
-            // TODO: fetch instead of mock
             mock();
         }
 

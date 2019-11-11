@@ -27,10 +27,14 @@ public class CurrentWeatherFetch extends AsyncTask<URL, Integer, Weather> {
             URL url;
             if (type == QueryType.gps) {
                 Location current = gps.getLastLocation();
-                url = new URL("https://api.openweathermap.org/data/2.5/weather?lat="
-                        + current.getLatitude() +
-                        "&lon=" + current.getLongitude() +
-                        "&appid=f047d3094287dc3a915a15e3458384ed");
+                if (current != null) {
+                    url = new URL("https://api.openweathermap.org/data/2.5/weather?lat="
+                            + current.getLatitude() +
+                            "&lon=" + current.getLongitude() +
+                            "&appid=f047d3094287dc3a915a15e3458384ed");
+                } else {
+                    url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Hanoi&appid=f047d3094287dc3a915a15e3458384ed");
+                }
             } else {
                 url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=f047d3094287dc3a915a15e3458384ed");
             }
@@ -54,7 +58,6 @@ public class CurrentWeatherFetch extends AsyncTask<URL, Integer, Weather> {
 
     protected void onPostExecute(Weather result) {
         WeatherIO.getInstance().setCurrentWeather(result);
-        System.out.println("current finished");
         WeatherIO.refresh();
     }
 }

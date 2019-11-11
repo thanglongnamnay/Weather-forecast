@@ -12,9 +12,7 @@ import com.example.weatherforcast.R;
 import com.example.weatherforcast.model.Weather;
 import com.example.weatherforcast.model.WeatherIO;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class WeatherAdapter extends BaseAdapter {
     private final WeatherIO weatherIO = WeatherIO.getInstance();
@@ -61,7 +59,6 @@ public class WeatherAdapter extends BaseAdapter {
         }
         Weather instant = (Weather) getItem(position);
         if (instant != null) {
-            DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.forLanguageTag("vi"));
             holder.time.setText(android.text.format.DateFormat.format("hh:mm dd/MM/yyyy", instant.getTime()));
             holder.temp.setText(instant.getTemp() + "C");
             holder.moisture.setText(instant.getMoisture() + "%");
