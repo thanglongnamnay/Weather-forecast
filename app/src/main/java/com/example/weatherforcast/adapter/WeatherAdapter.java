@@ -59,7 +59,7 @@ public class WeatherAdapter extends BaseAdapter {
         }
         Weather instant = (Weather) getItem(position);
         if (instant != null) {
-            holder.time.setText(android.text.format.DateFormat.format("HH:mm dd/MM/yyyy", instant.getTime()));
+            holder.time.setText(android.text.format.DateFormat.format("HH:mm dd/MM", instant.getTime()));
             holder.temp.setText(instant.getTemp() + "C");
             holder.moisture.setText(instant.getMoisture() + "%");
             holder.wind.setText(instant.getWind() + " m/s");

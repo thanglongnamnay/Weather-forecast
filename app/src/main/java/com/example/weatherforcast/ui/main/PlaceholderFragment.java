@@ -15,10 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.weatherforcast.IO.WeatherIO;
 import com.example.weatherforcast.R;
 import com.example.weatherforcast.adapter.WeatherAdapter;
 import com.example.weatherforcast.model.Weather;
-import com.example.weatherforcast.IO.WeatherIO;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,6 +76,7 @@ public class PlaceholderFragment extends Fragment {
                 strings[i] = jsonObject.getString("name") + ", " + jsonObject.getString("country");
                 cityNames[i] = jsonObject.getString("name");
             }
+            root.findViewById(R.id.view_current_weather).setVisibility(View.INVISIBLE);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, strings);
 
             Spinner spinner = root.findViewById(R.id.spinner2);
@@ -109,7 +110,13 @@ public class PlaceholderFragment extends Fragment {
 
     public void refresh() {
         Weather current = WeatherIO.getInstance().getCurrentWeather();
-        if (current == null) return;
+        TextView tvConnecting = root.findViewById(R.id.tv_connecting);
+        if (current == null) {
+            tvConnecting.setText("Không có kết nối");
+            return;
+        }
+        tvConnecting.setVisibility(View.INVISIBLE);
+        root.findViewById(R.id.view_current_weather).setVisibility(View.VISIBLE);
         ((TextView)root.findViewById(R.id.tv_city_name)).setText(current.getCity());
         ((TextView)root.findViewById(R.id.tv_time)).setText(android.text.format.DateFormat.format("HH:mm dd/MM/yyyy", current.getTime()));
         ((TextView)root.findViewById(R.id.tv_temp)).setText(current.getTemp() + " độ C");

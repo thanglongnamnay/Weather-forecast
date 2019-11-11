@@ -56,9 +56,8 @@ public class CurrentWeatherFetch extends AsyncTask<URL, Integer, Weather> {
             return WeatherIO.parseWeather(weather, null, weather.getString("name"));
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
     protected void onPostExecute(Weather result) {

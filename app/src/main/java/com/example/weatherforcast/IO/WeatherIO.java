@@ -73,11 +73,11 @@ public class WeatherIO {
 
     private void mock() {
         weatherList = new ArrayList<>();
-
-        Date now = new Date(System.currentTimeMillis());
-        weatherList.add(new Weather("Hanoi", now, 23, 60, 2, "brief", "Ngay dep troi", R.drawable.cloudy002));
-        weatherList.add(new Weather("Hanoi", new Date(3600), 21, 55, 1, "brief", "Buoi chieu dep troi", R.drawable.cloudy002));
-        weatherList.add(new Weather("Hanoi", new Date(3600), 18, 42, 1, "brief", "Dem dep troi", R.drawable.cloudy002));
+//
+//        Date now = new Date(System.currentTimeMillis());
+//        weatherList.add(new Weather("Hanoi", now, 23, 60, 2, "brief", "Ngay dep troi", R.drawable.cloudy002));
+//        weatherList.add(new Weather("Hanoi", new Date(3600), 21, 55, 1, "brief", "Buoi chieu dep troi", R.drawable.cloudy002));
+//        weatherList.add(new Weather("Hanoi", new Date(3600), 18, 42, 1, "brief", "Dem dep troi", R.drawable.cloudy002));
     }
 
     public void setWeatherList(ArrayList<Weather> weatherList) {
@@ -86,7 +86,7 @@ public class WeatherIO {
 
     public Weather getCurrentWeather() {
         if (currentWeather == null) {
-            currentWeather = weatherList.get(0);
+            currentWeather = null;
         }
         return currentWeather;
     }
