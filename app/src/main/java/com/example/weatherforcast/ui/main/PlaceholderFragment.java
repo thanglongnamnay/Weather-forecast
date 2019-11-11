@@ -16,9 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.weatherforcast.R;
-import com.example.weatherforcast.controller.WeatherAdapter;
+import com.example.weatherforcast.adapter.WeatherAdapter;
 import com.example.weatherforcast.model.Weather;
-import com.example.weatherforcast.model.WeatherIO;
+import com.example.weatherforcast.IO.WeatherIO;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -111,7 +111,7 @@ public class PlaceholderFragment extends Fragment {
         Weather current = WeatherIO.getInstance().getCurrentWeather();
         if (current == null) return;
         ((TextView)root.findViewById(R.id.tv_city_name)).setText(current.getCity());
-        ((TextView)root.findViewById(R.id.tv_time)).setText(android.text.format.DateFormat.format("hh:mm dd/MM/yyyy", current.getTime()));
+        ((TextView)root.findViewById(R.id.tv_time)).setText(android.text.format.DateFormat.format("HH:mm dd/MM/yyyy", current.getTime()));
         ((TextView)root.findViewById(R.id.tv_temp)).setText(current.getTemp() + " độ C");
         ((TextView)root.findViewById(R.id.tv_moisture)).setText(current.getMoisture() + "%");
         ((TextView)root.findViewById(R.id.tv_wind)).setText(current.getWind() + " m/s");
@@ -120,5 +120,4 @@ public class PlaceholderFragment extends Fragment {
 
         weatherAdapter.notifyDataSetChanged();
     }
-
 }

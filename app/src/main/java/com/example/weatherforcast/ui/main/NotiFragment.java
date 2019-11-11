@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.weatherforcast.AddNotiActivity;
 import com.example.weatherforcast.R;
-import com.example.weatherforcast.controller.NotiAdapter;
-import com.example.weatherforcast.model.NotiIO;
+import com.example.weatherforcast.adapter.NotiAdapter;
+import com.example.weatherforcast.IO.NotiIO;
 
 public class NotiFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

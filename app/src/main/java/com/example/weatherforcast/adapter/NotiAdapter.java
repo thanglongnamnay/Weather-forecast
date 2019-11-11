@@ -1,4 +1,4 @@
-package com.example.weatherforcast.controller;
+package com.example.weatherforcast.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.weatherforcast.R;
 import com.example.weatherforcast.model.Noti;
 import com.example.weatherforcast.model.NotiArrayList;
-import com.example.weatherforcast.model.NotiIO;
+import com.example.weatherforcast.IO.NotiIO;
 
 public class NotiAdapter extends BaseAdapter {
     private NotiArrayList notiList;

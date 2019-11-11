@@ -1,4 +1,4 @@
-package com.example.weatherforcast.controller;
+package com.example.weatherforcast.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.weatherforcast.R;
 import com.example.weatherforcast.model.Weather;
-import com.example.weatherforcast.model.WeatherIO;
+import com.example.weatherforcast.IO.WeatherIO;
 
 import java.util.ArrayList;
 
@@ -59,7 +59,7 @@ public class WeatherAdapter extends BaseAdapter {
         }
         Weather instant = (Weather) getItem(position);
         if (instant != null) {
-            holder.time.setText(android.text.format.DateFormat.format("hh:mm dd/MM/yyyy", instant.getTime()));
+            holder.time.setText(android.text.format.DateFormat.format("HH:mm dd/MM/yyyy", instant.getTime()));
             holder.temp.setText(instant.getTemp() + "C");
             holder.moisture.setText(instant.getMoisture() + "%");
             holder.wind.setText(instant.getWind() + " m/s");

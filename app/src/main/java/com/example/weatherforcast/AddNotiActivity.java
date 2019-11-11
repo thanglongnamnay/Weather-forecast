@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.weatherforcast.model.Noti;
-import com.example.weatherforcast.model.NotiIO;
+import com.example.weatherforcast.IO.NotiIO;
 import com.example.weatherforcast.ui.main.TimePickerFragment;
 
 public class AddNotiActivity extends AppCompatActivity {

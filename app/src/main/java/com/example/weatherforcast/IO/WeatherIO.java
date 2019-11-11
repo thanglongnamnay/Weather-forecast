@@ -1,6 +1,11 @@
-package com.example.weatherforcast.model;
+package com.example.weatherforcast.IO;
 
+import com.example.weatherforcast.IO.fetch.CurrentWeatherFetch;
+import com.example.weatherforcast.IO.fetch.ForecastFetch;
 import com.example.weatherforcast.R;
+import com.example.weatherforcast.model.Constants;
+import com.example.weatherforcast.model.QueryType;
+import com.example.weatherforcast.model.Weather;
 import com.example.weatherforcast.ui.main.PlaceholderFragment;
 
 import org.json.JSONException;
@@ -105,9 +110,9 @@ public class WeatherIO {
         JSONObject main = weather.getJSONObject("main");
         Date time;
         if (timezone != null)
-            time = new Date(1000 * (weather.getLong("dt") + timezone));
+            time = new Date(1000 * (weather.getLong("dt") + timezone - Constants.TIME_ZOME));
         else
-            time = new Date(1000 * (weather.getLong("dt") + weather.getLong("timezone")));
+            time = new Date(1000 * (weather.getLong("dt") + weather.getLong("timezone") - Constants.TIME_ZOME));
 
         int temp = (int) Float.parseFloat(main.getString("temp")) - 273;
         int moisture = Integer.parseInt(main.getString("humidity"));

@@ -1,7 +1,12 @@
-package com.example.weatherforcast.model;
+package com.example.weatherforcast.IO.fetch;
 
 import android.location.Location;
 import android.os.AsyncTask;
+
+import com.example.weatherforcast.IO.WeatherIO;
+import com.example.weatherforcast.model.GPS;
+import com.example.weatherforcast.model.QueryType;
+import com.example.weatherforcast.model.Weather;
 
 import org.json.JSONObject;
 

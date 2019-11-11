@@ -1,21 +1,24 @@
-package com.example.weatherforcast.model;
+package com.example.weatherforcast.IO;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.work.Data;
 
 import com.example.weatherforcast.R;
+import com.example.weatherforcast.model.Constants;
+import com.example.weatherforcast.model.Noti;
+import com.example.weatherforcast.model.NotiArrayList;
+import com.example.weatherforcast.model.NotificationHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.UUID;
 
 public class NotiIO {
     private static final String CHANNEL_ID = "noti";
@@ -64,16 +67,6 @@ public class NotiIO {
     public NotiArrayList getNotiList() {
         return notiList;
     }
-    private void scheduleNotification (Notification notification , long delay) {
-        Intent notificationIntent = new Intent(context, MyNotificationPublisher. class ) ;
-        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION_ID , 1 ) ;
-        notificationIntent.putExtra(MyNotificationPublisher.NOTIFICATION , notification) ;
-        PendingIntent pendingIntent = PendingIntent. getBroadcast ( context, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context. ALARM_SERVICE ) ;
-        assert alarmManager != null;
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP , futureInMillis , pendingIntent) ;
-    }
     public void add(Noti noti) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -84,9 +77,37 @@ public class NotiIO {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         // notificationId is a unique int for each notification that you must define
-        scheduleNotification(mBuilder.build(), 5000);
+        String tag = UUID.randomUUID().toString();
+
+        //Get time before alarm
+        String time = noti.getTime();
+        int hour = Integer.parseInt(time.split(":")[0]);
+        int min = Integer.parseInt(time.split(":")[1]);
+        long alertTime = getAlertTime(hour, min) - System.currentTimeMillis();
+
+        int random = (int )(Math.random() * 50 + 1);
+
+        //Data
+        Data data = createWorkInputData(Constants.TITLE, noti.getDescription(), random);
+
+        NotificationHandler.scheduleReminder(alertTime, data, tag);
         notiList.add(noti);
         update();
+    }
+
+    private long getAlertTime(int hour, int min){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, min);
+        return cal.getTimeInMillis();
+    }
+
+    private Data createWorkInputData(String title, String text, int id){
+        return new Data.Builder()
+                .putString(Constants.EXTRA_TITLE, title)
+                .putString(Constants.EXTRA_TEXT, text)
+                .putInt(Constants.EXTRA_ID, id)
+                .build();
     }
     public void remove(Noti noti) {
         notiList.removeIf(n -> n == noti);
