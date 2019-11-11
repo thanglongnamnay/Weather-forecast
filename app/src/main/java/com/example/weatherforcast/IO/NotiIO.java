@@ -3,11 +3,8 @@ package com.example.weatherforcast.IO;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Data;
 
-import com.example.weatherforcast.R;
 import com.example.weatherforcast.model.Constants;
 import com.example.weatherforcast.model.Noti;
 import com.example.weatherforcast.model.NotiArrayList;
@@ -57,7 +54,7 @@ public class NotiIO {
                 JSONObject object = array.getJSONObject(i);
                 System.out.println(object.toString());
 
-                notiList.add(Noti.fromJson(object));
+                add(Noti.fromJson(object));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -68,21 +65,14 @@ public class NotiIO {
         return notiList;
     }
     public void add(Noti noti) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Thời tiết tổng hợp")
-            .setContentText(noti.getDescription())
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         // notificationId is a unique int for each notification that you must define
         String tag = UUID.randomUUID().toString();
 
         //Get time before alarm
-        String time = noti.getTime();
-        int hour = Integer.parseInt(time.split(":")[0]);
-        int min = Integer.parseInt(time.split(":")[1]);
+        String[] time = noti.getTime().split(":");
+        int hour = Integer.parseInt(time[0]);
+        int min = Integer.parseInt(time[1]);
         long alertTime = getAlertTime(hour, min) - System.currentTimeMillis();
 
         int random = (int )(Math.random() * 50 + 1);
@@ -97,8 +87,10 @@ public class NotiIO {
 
     private long getAlertTime(int hour, int min){
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.HOUR, hour);
         cal.set(Calendar.MINUTE, min);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         return cal.getTimeInMillis();
     }
 

@@ -72,11 +72,12 @@ public class NotificationHandler extends Worker {
             Objects.requireNonNull(notificationManager).createNotificationChannel(channel);
         }
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "default")
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "noti")
                 .setContentTitle(title)
                 .setContentText(text)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.sunny)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
         Objects.requireNonNull(notificationManager).notify(id, notification.build());
